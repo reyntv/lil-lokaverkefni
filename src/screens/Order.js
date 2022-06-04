@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-import DateTimePicker from "react-datetime-picker";
+import React, { useContext, useState } from "react";
+import DatePicker from "react-datepicker";
+import setHours from "date-fns/setHours";
+import setMinutes from "date-fns/setMinutes";
 import { Link } from "react-router-dom";
+import OrderContext from "../OrderContext";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Order = () => {
-  //const [dateAndTime, setDateAndTime] = useState(new Date());
-  //const [numberOfPeople, setNumberOfPeople] = useState(1);
+  const { dateAndTime, setDateAndTime } = useContext(OrderContext);
+  const { numberOfPeople, setNumberOfPeople } = useContext(OrderContext);
   const minNumberOfPeople = 1;
   const maxNumberOfPeople = 10;
 
@@ -16,14 +20,25 @@ const Order = () => {
     setNumberOfPeople(value);
   };
 
+  const filterPassedTime = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
   return (
     <div>
-      <DateTimePicker
-        format="dd-MM-y hh:mm"
-        minDate={new Date()}
-        formatHour="HH"
-        onChange={setDateAndTime}
-        value={dateAndTime}
+      <DatePicker
+        selected={dateAndTime}
+        onChange={(date) => setDateAndTime(date)}
+        showTimeSelect
+        timeIntervals={15}
+        timeFormat="HH:mm"
+        filterTime={filterPassedTime}
+        minTime={new Date(0, 0, 0, 16, 0)}
+        maxTime={new Date(0, 0, 0, 23, 0)}
+        dateFormat="MMMM d, yyyy HH:mm"
       />
 
       <div>

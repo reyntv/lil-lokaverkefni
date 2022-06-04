@@ -1,9 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import OrderContext from "../OrderContext";
 
 const SelectDish = () => {
-  //const [dish, setDish] = useState([]);
+  const { dish, setDish } = useContext(OrderContext);
 
   const getDish = async () => {
     const result = await axios(

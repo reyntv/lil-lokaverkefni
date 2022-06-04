@@ -3,7 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import OrderContext from "./OrderContext";
 
@@ -76,8 +76,7 @@ const pickOrder = () => {
 };
 
 const Home = () => {
-  //const [inputState, setInputState] = useState("");
-  {inputState, setInputState} = useContext(OrderContext)
+  const { inputState, setInputState } = useContext(OrderContext);
 
   return (
     <div>

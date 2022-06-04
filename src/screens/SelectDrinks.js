@@ -1,14 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import OrderContext from "../OrderContext";
 
 const SelectDrinks = () => {
-  //const [drinks, setDrinks] = useState([]);
+  const { drinks, setDrinks } = useContext(OrderContext);
 
   const getDrinks = async () => {
     const result = await axios("https://api.punkapi.com/v2/beers");
     setDrinks(result.data);
-    console.log(result.data);
   };
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const SelectDrinks = () => {
     <main style={{ padding: "1rem 0" }}>
       <h2>Drinks</h2>
       {drinks.map((drink) => (
-        <div>
+        <div key={drink.id}>
           <p>{drink.name}</p>
         </div>
       ))}
