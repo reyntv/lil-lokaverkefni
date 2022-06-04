@@ -15,7 +15,7 @@ const App = () => {
   const [inputState, setInputState] = useState("");
   const [drinks, setDrinks] = useState([]);
   const [dateAndTime, setDateAndTime] = useState(
-    setHours(setMinutes(new Date(), 30), 16)
+    setHours(setMinutes(new Date(), 0), 16)
   );
   const [numberOfPeople, setNumberOfPeople] = useState(1);
 

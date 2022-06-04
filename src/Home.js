@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import OrderContext from "./OrderContext";
+import validator from "validator";
 
 const SimpleSlider = () => {
   var settings = {
@@ -68,7 +69,7 @@ const Wrapper = styled.div`
 `;
 
 const findOrder = (orderId) => {
-  console.log(`email entered: ${orderId}`);
+  console.log(`valid email:  ${validator.isEmail(orderId)}`);
 };
 
 const pickOrder = () => {
@@ -103,7 +104,7 @@ const Home = () => {
         <ContentBox>
           Find Order:
           <input
-            type="text"
+            type="email"
             placeholder="Your email address"
             onChange={(e) => setInputState(e.target.value)}
           />
