@@ -11,7 +11,6 @@ const SelectDish = () => {
       "https://themealdb.com/api/json/v1/1/random.php"
     );
     setDish(result.data);
-    console.log(result.data.meals[0].strMeal);
   };
 
   useEffect(() => {

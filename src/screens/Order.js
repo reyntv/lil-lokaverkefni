@@ -1,16 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import setHours from "date-fns/setHours";
-import setMinutes from "date-fns/setMinutes";
 import { Link } from "react-router-dom";
 import OrderContext from "../OrderContext";
+import validator from "validator";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Order = () => {
+  const { orderId, setOrderId } = useContext(OrderContext);
   const { dateAndTime, setDateAndTime } = useContext(OrderContext);
   const { numberOfPeople, setNumberOfPeople } = useContext(OrderContext);
+  const [emailIsValid, setEmailIsValid] = useState(false);
   const minNumberOfPeople = 1;
   const maxNumberOfPeople = 10;
+
+  useEffect(() => {
+    return () => {
+      console.log(`orderId ${orderId}`);
+    };
+  }, [emailIsValid, orderId]);
 
   const handleChange = (event) => {
     const value = Math.max(
@@ -26,6 +33,26 @@ const Order = () => {
 
     return currentDate.getTime() < selectedDate.getTime();
   };
+  const findOrder = (email) => {
+    if (validator.isEmail(email)) {
+      setEmailIsValid(true);
+      setOrderId(email);
+    } else {
+      setEmailIsValid(false);
+    }
+  };
+
+  const OrderButton = () => {
+    return (
+      <div>
+        {emailIsValid ? (
+          <Link to="/showreceipt">Order</Link>
+        ) : (
+          <p>Email required to order.</p>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div>
@@ -40,7 +67,6 @@ const Order = () => {
         maxTime={new Date(0, 0, 0, 23, 0)}
         dateFormat="MMMM d, yyyy HH:mm"
       />
-
       <div>
         Number of people:
         <input
@@ -50,9 +76,13 @@ const Order = () => {
           onChange={handleChange}
         />
       </div>
-      <button>
-        <Link to="/showreceipt">Order</Link>
-      </button>
+      Your email:
+      <input
+        type="email"
+        placeholder="Your email address"
+        onChange={(e) => findOrder(e.target.value)}
+      />
+      <OrderButton></OrderButton>
     </div>
   );
 };
